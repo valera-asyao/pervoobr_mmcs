@@ -6,4 +6,5 @@ source "https://rubygems.org"
 gemspec
 
 gem "irb"
+gem "fiddle"
 gem "rake", "~> 13.0"

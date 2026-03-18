@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+# bin/generate_integrals
+
+require 'optparse'
+require_relative '../lib/antiderivative_generator'
+
+options = { count: 5, terms: 3, show_answers: false }
+
+OptionParser.new do |opts|
+  opts.banner = "Использование: generate_integrals [опции]"
+
+  opts.on("-c", "--count N", Integer, "Количество задач (по умолчанию 5)") do |n|
+    options[:count] = n
+  end
+
+  opts.on("-t", "--terms N", Integer, "Количество слагаемых в задаче (по умолчанию 3)") do |n|
+    options[:terms] = n
+  end
+
+  opts.on("-a", "--answers", "Показать ответы") do
+    options[:show_answers] = true
+  end
+end.parse!
+
+puts "=== Генератор задач на нахождение первообразной ==="
+tasks = AntiderivativeGenerator.generate_tasks(options[:count], options[:terms])
+
+tasks.each_with_index do |task, index|
+  puts "\nЗадача №#{index + 1}:"
+  puts task[:question]
+  puts task[:answer] if options[:show_answers]
+end
+puts "\nУдачи!"

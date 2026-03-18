@@ -1,0 +1,16 @@
+# lib/antiderivative_generator.rb
+require_relative "antiderivative_generator/version"
+require_relative "antiderivative_generator/expression"
+
+module AntiderivativeGenerator
+  class Error < StandardError; end
+
+  def self.generate_tasks(count, terms_per_task = 3)
+    tasks = []
+    count.times do
+      expr = Expression.new(terms_per_task)
+      tasks << { question: expr.question_string, answer: expr.answer_string }
+    end
+    tasks
+  end
+end
