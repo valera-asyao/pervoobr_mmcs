@@ -6,7 +6,7 @@ module AntiderivativeGenerator
 
     def initialize(term_count = 3)
       @terms = Array.new(term_count) do
-        [Terms::Polynomial, Terms::Trigonometric].sample.new
+        [Terms::Polynomial, Terms::Trigonometric, Terms::Exponential, Terms::Logarithmic].sample.new
       end
     end
 
