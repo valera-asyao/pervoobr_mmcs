@@ -1,4 +1,3 @@
-# lib/pervoobr_mmcs.rb/expression.rb
 require_relative 'term'
 
 module AntiderivativeGenerator
@@ -7,7 +6,6 @@ module AntiderivativeGenerator
 
     def initialize(term_count = 3)
       @terms = Array.new(term_count) do
-        # Случайный выбор между полиномом и тригонометрией
         [Terms::Polynomial, Terms::Trigonometric].sample.new
       end
     end

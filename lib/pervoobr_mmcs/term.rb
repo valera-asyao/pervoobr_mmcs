@@ -1,4 +1,3 @@
-# lib/pervoobr_mmcs/term.rb
 module AntiderivativeGenerator
   module Terms
     # Базовый класс для слагаемого
@@ -32,9 +31,13 @@ module AntiderivativeGenerator
         numerator = @coefficient.abs
         denominator = new_power
 
-        # Форматируем дробь, если нужно
-        fraction = (numerator % denominator).zero? ? (numerator / denominator).to_s : "#{numerator}/#{denominator}"
-        fraction = "" if fraction == "1"
+        # Форматируем дробь
+        fraction = if (numerator % denominator).zero?
+                     (numerator / denominator).to_s
+                   else
+                     "#{numerator}/#{denominator}"
+                   end
+        fraction = '' if fraction == '1'
 
         "#{sign}#{fraction}x^#{new_power}"
       end
@@ -52,13 +55,14 @@ module AntiderivativeGenerator
       end
 
       def answer
-        value = "#{abs_coefficient}#{@type == :sin ? 'cos' : 'sin'}(x)"
+        new_type = @type == :sin ? 'cos' : 'sin'
+        value = "#{abs_coefficient}#{new_type}(x)"
 
         sign_for_answer = if @type == :sin
-          @coefficient.positive? ? "-" : "+"
-        else
-          @coefficient.positive? ? "+" : "-"
-        end
+                            @coefficient.positive? ? '-' : '+'
+                          else
+                            @coefficient.positive? ? '+' : '-'
+                          end
 
         "#{sign_for_answer}#{value}"
       end
