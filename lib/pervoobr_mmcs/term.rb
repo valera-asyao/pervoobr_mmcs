@@ -23,9 +23,15 @@ module AntiderivativeGenerator
       # Хелпер для сокращения дробей и форматирования коэффициентов
       def format_coeff(num, den = 1)
         res = Rational(num, den)
+
         return "" if res == 1
         return "-" if res == -1
-        res.to_s
+
+        if res.denominator == 1
+    	  res.numerator.to_s
+  	else
+    	  "#{res.numerator}/#{res.denominator}"
+  	end
       end
     end
 
@@ -42,7 +48,6 @@ module AntiderivativeGenerator
 
       def answer
         new_power = @power + 1
-        # Интеграл: (a / (k * (n+1))) * (kx + b)^(n+1)
         main_den = @k * new_power
         coeff = format_coeff(@coefficient, main_den)
         "#{coeff}#{arg_str}^#{new_power}"
@@ -134,14 +139,16 @@ module AntiderivativeGenerator
       end
 
       def answer
-        # ∫ a^(kx+b) = (a^(kx+b)) / (k * ln(a))
-        coeff = format_coeff(@coefficient, @k)
-        # Поскольку ln(a) иррационален, выводим его в знаменателе строкой
-        denom = coeff.include?('/') ? "#{coeff.split('/')[1]}ln(#{@base})" : "#{@k}ln(#{@base})"
-        num = coeff.include?('/') ? coeff.split('/')[0] : @coefficient
-        
-        # Упрощенное форматирование для логарифма
-        "#{num}/#{denom} * #{@base}^#{arg_str}"
+        coeff = Rational(@coefficient, @k)
+
+        coeff_str =
+          if coeff.denominator == 1
+            coeff.numerator.to_s
+          else
+            "#{coeff.numerator}/#{coeff.denominator}"
+          end
+
+        "#{coeff_str}/ln(#{@base}) * #{@base}^#{arg_str}"
       end
     end
 
