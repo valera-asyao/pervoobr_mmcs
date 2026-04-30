@@ -92,8 +92,8 @@ def help_text
     Я бот-генератор первообразных.
     Функционал:
 
-    /generate [count] [terms] - показать задачи с ответами
-    /quiz [count] [terms] - режим проверки (вводите ответы сообщениями)
+    /generate [количество заданий] [количество функций] - показать задачи с ответами
+    /quiz [количество заданий] [количество функций] - режим проверки (вводите ответы сообщениями)
     /test - быстрая проверка: 1 задача, 3 слагаемых
     /skip - пропустить текущий вопрос в викторине
     /cancel - отменить текущую викторину
@@ -129,7 +129,7 @@ def quiz_result_text(score, total)
     elsif percentage >= 50
       "Средний результат, можно лучше"
     else
-      "Тебе нужно потренироваться"
+      "Бро, тебе нужно потренироваться"
     end
 
   <<~TEXT
@@ -235,7 +235,7 @@ api = TelegramApi.new(token)
 sessions = SessionStore.new
 offset = 0
 
-puts "Telegram bot started..."
+puts "Бот запущен"
 
 loop do
   updates = api.get_updates(offset: offset)
